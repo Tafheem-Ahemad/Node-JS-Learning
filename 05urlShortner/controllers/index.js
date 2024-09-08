@@ -3,12 +3,14 @@ const {shortIDGenerater} =require("./createShortID");
 
 const handleGetNewId = async (req, res) => {
 
-	const url = req.body.url;
+	const allURLs = await URL.find({});
+
+	const url = req.body.url.trim();
 	if(!url) return res.status(400).json({error : "URL is not given"})
 
 	const isExists = await URL.findOne({redirectURL : url});
 	if(isExists){
-		return res.status(200).json( {id : isExists.shortID});
+		return res.render('home',{id : isExists.shortID , urls : allURLs});
 	}
 
 	let shortID;
@@ -27,7 +29,8 @@ const handleGetNewId = async (req, res) => {
 		visitHistory : [],
 	})
 
-	return res.status(201).json({id : shortID});
+
+	return res.render('home',{id : shortID , urls : allURLs});
 }
 
 const handeleAnalytics = async (req, res) => {

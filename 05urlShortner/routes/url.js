@@ -1,5 +1,5 @@
 const express = require('express');
-const {handleGetNewId, handeleAnalytics} = require("../controllers/index")
+const {handleGetNewId, handeleAnalytics ,handeleGetOriginalPage} = require("../controllers/index")
 const router = express.Router();
 
 router
@@ -9,6 +9,10 @@ router
 router
 	.route("/analytics/:id")
 	.get( handeleAnalytics)
+
+router
+	.route("/:shortid")
+	.get(handeleGetOriginalPage)
 
 
 module.exports =router;
